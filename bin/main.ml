@@ -2,10 +2,11 @@ open Sys
 open Unix
 open Printf
 
-let prompt =
+let prompt () =
   Printf.printf "mush> ";
   try
-    Some(read_line())
+    let lines = Some(read_line()) in
+    lines
   with End_of_file -> None
 
 let is_supported_os =
@@ -15,8 +16,11 @@ let is_supported_os =
   | _ -> false
 
 let rec shell () =
-  begin
-    let command = Array.of_list (Some(prompt) |> String.split_on_char ' ') in
+    let enteredCommand = match prompt() with
+        | Some(c) -> c
+        | None -> ""
+    in
+    let command = Array.of_list (enteredCommand |> String.split_on_char ' ') in
     match fork() with
       | 0 -> begin
           try
@@ -25,7 +29,6 @@ let rec shell () =
         end
       | -1 -> printf "%s" "fork error";
       | _ -> ignore(wait());shell()
-  end;;
 
 let () =
   if not is_supported_os then
