@@ -1,6 +1,6 @@
 # mushell
 
-Very small shell in OCaml.
+Very small shell in OCaml for Unix systems.
 
 Work in progress...
 
