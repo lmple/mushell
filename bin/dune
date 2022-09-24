@@ -1,0 +1,4 @@
+(executable
+ (public_name mushell)
+ (name main)
+ (libraries mushell Unix))
